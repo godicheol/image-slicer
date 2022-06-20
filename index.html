@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>image-slicer</title>
+    <style>
+        .line{margin: 1rem 0; border-bottom: 1px solid;}
+        img{display: inline; width: 128px; height: 128px; border: 1px solid; margin: 1px 0px;}
+    </style>
+</head>
+
+<body>
+    <h1>image-slicer</h1>
+
+    <input id="file-1" type="file" accept="image/*">
+
+    <div class="line"></div>
+
+    <img id="result-0" style="width: 410px; height: 280px;" src="" alt="">
+
+    <div class="line"></div>
+
+    <img id="result-1" src="" alt="">
+    <img id="result-2" src="" alt="">
+    <img id="result-3" src="" alt=""><br />
+    <img id="result-4" src="" alt="">
+    <img id="result-5" src="" alt="">
+    <img id="result-6" src="" alt="">
+
+    <script src="dist/image-slicer.js"></script>
+    <script>
+        document.getElementById("file-1").addEventListener("change", function(e) {
+            var file = e.target.files[0];
+            var img = document.getElementById("result-0");
+
+            img.onload = function() {
+                var cols = [
+                    img.naturalWidth * 0.3,
+                    img.naturalWidth * 0.6,
+                ];
+                var rows = [
+                    img.naturalHeight * 0.5
+                ]
+                imageSlicer.slice(img.src, {
+                    rows: rows,
+                    cols: cols,
+                    type: "image/jpeg",
+                    quality: 0.7
+                }, function(err, res) {
+                    if (err) {
+                        console.error(err);
+                        return false;
+                    }
+                    console.log(res);
+                    document.getElementById("result-1").src = URL.createObjectURL(res[0]);
+                    document.getElementById("result-2").src = URL.createObjectURL(res[1]);
+                    document.getElementById("result-3").src = URL.createObjectURL(res[2]);
+                    document.getElementById("result-4").src = URL.createObjectURL(res[3]);
+                    document.getElementById("result-5").src = URL.createObjectURL(res[4]);
+                    document.getElementById("result-6").src = URL.createObjectURL(res[5]);
+                });
+
+            }
+            img.src = URL.createObjectURL(file);
+
+        })
+    </script>
+</body>
+
+</html>
