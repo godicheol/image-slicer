@@ -53,13 +53,13 @@
                         console.error(err);
                         return false;
                     }
-                    console.log(res);
-                    document.getElementById("result-1").src = URL.createObjectURL(res[0]);
-                    document.getElementById("result-2").src = URL.createObjectURL(res[1]);
-                    document.getElementById("result-3").src = URL.createObjectURL(res[2]);
-                    document.getElementById("result-4").src = URL.createObjectURL(res[3]);
-                    document.getElementById("result-5").src = URL.createObjectURL(res[4]);
-                    document.getElementById("result-6").src = URL.createObjectURL(res[5]);
+                    console.log("res", res);
+                    document.getElementById("result-1").src = URL.createObjectURL(res[0][0]);
+                    document.getElementById("result-2").src = URL.createObjectURL(res[0][1]);
+                    document.getElementById("result-3").src = URL.createObjectURL(res[0][2]);
+                    document.getElementById("result-4").src = URL.createObjectURL(res[1][0]);
+                    document.getElementById("result-5").src = URL.createObjectURL(res[1][1]);
+                    document.getElementById("result-6").src = URL.createObjectURL(res[1][2]);
                 });
 
             }

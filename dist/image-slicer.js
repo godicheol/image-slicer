@@ -9,21 +9,21 @@
             var i, j, c, r, rarr, carr, rlen, clen, len, tw, th, nw, nh, x, y, w, h, rows, cols;
             var sx, sy, sw, sh, dx, dy, dw, dh;
             var output = [];
-            var canvasArrayToFile = function() {
+            var canvasArrayToBlob = function() {
                 if (r < rlen) {
                     if (c < clen) {
                         rows[r][c].toBlob(function(blob) {
                             var file = new File([blob], "sliced-"+r+"-"+c+".jpg", {
                                 type: blob.type
                             });
-                            output.push(file);
+                            output[r][c] = file;
                             c++;
-                            canvasArrayToFile();
+                            canvasArrayToBlob();
                         }, options.type || "image/jpeg", options.quality || 0.92);
                     } else {
                         c = 0;
                         r++;
-                        canvasArrayToFile();
+                        canvasArrayToBlob();
                     }
                 } else {
                     return cb(null, output);
@@ -91,10 +91,11 @@
                     }
                     th += h;
                     rows.push(cols);
+                    output.push([]);
                 }
                 r = 0;
                 c = 0;
-                canvasArrayToFile();
+                canvasArrayToBlob();
             }
             image.onerror = function() {
                 return cb(new Error("Load error"));
