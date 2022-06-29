@@ -9,7 +9,7 @@
             var filename, extension, mimetype, quality, i, j, c, r, rarr, carr, rlen, clen, len, tw, th, nw, nh, x, y, w, h, rows, cols;
             var sx, sy, sw, sh, dx, dy, dw, dh;
             var output = [];
-            var canvasArrayToBlob = function() {
+            var canvasArrayToBlobArray = function() {
                 if (r < rlen) {
                     if (c < clen) {
                         rows[r][c].toBlob(function(blob) {
@@ -17,12 +17,12 @@
                                 type: blob.type
                             });
                             c++;
-                            canvasArrayToBlob();
+                            canvasArrayToBlobArray();
                         }, mimetype, quality);
                     } else {
                         c = 0;
                         r++;
-                        canvasArrayToBlob();
+                        canvasArrayToBlobArray();
                     }
                 } else {
                     return cb(null, output);
@@ -98,7 +98,7 @@
                 }
                 r = 0;
                 c = 0;
-                canvasArrayToBlob();
+                canvasArrayToBlobArray();
             }
             image.onerror = function() {
                 return cb(new Error("Load error"));
