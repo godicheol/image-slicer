@@ -6,20 +6,19 @@
     exports.slice = function(src, options, cb) {
         try {
             var image = new Image();
-            var i, j, c, r, rarr, carr, rlen, clen, len, tw, th, nw, nh, x, y, w, h, rows, cols;
+            var filename, extension, mimetype, quality, i, j, c, r, rarr, carr, rlen, clen, len, tw, th, nw, nh, x, y, w, h, rows, cols;
             var sx, sy, sw, sh, dx, dy, dw, dh;
             var output = [];
             var canvasArrayToBlob = function() {
                 if (r < rlen) {
                     if (c < clen) {
                         rows[r][c].toBlob(function(blob) {
-                            var file = new File([blob], "sliced-"+r+"-"+c+".jpg", {
+                            output[r][c] = new File([blob], filename+" ("+(r*clen+c)+")"+extension, {
                                 type: blob.type
                             });
-                            output[r][c] = file;
                             c++;
                             canvasArrayToBlob();
-                        }, options.type || "image/jpeg", options.quality || 0.92);
+                        }, mimetype, quality);
                     } else {
                         c = 0;
                         r++;
@@ -31,9 +30,13 @@
             }
 
             if (!options) {
-                throw new Error("Option must be Object");
+                throw new Error("Options must be Object");
             }
 
+            filename = options.filename ? options.filename : "sliced";
+            quality = typeof(options.quality) === "number" ? options.quality : 0.92;
+            mimetype = /^(image\/)/i.test(options.mimetype) ? options.mimetype : "image/png";
+            extension = "."+mimetype.replace(/^(image\/)/i, "");
             rarr = options.rows ? options.rows : [];
             carr = options.cols ? options.cols : [];
 

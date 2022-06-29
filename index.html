@@ -46,8 +46,9 @@
                 imageSlicer.slice(img.src, {
                     rows: rows,
                     cols: cols,
-                    type: "image/jpeg",
-                    quality: 0.7
+                    filename: "new sliced",
+                    mimetype: "image/jpeg",
+                    quality: 0.5
                 }, function(err, res) {
                     if (err) {
                         console.error(err);
