@@ -6,7 +6,7 @@
     exports.slice = function(src, options, cb) {
         try {
             var image = new Image();
-            var filename, extension, mimetype, quality, i, j, c, r, rarr, carr, rlen, clen, len, tw, th, nw, nh, x, y, w, h, rows, cols;
+            var filename, extension, mimetype, quality, i, j, c, r, rarr, carr, rlen, clen, tw, th, nw, nh, x, y, w, h, rows, cols;
             var sx, sy, sw, sh, dx, dy, dw, dh;
             var output = [];
             var canvasArrayToBlobArray = function() {
@@ -90,7 +90,6 @@
                         );
                         cols.push(canvas);
                         tw += w;
-                        len++;
                     }
                     th += h;
                     rows.push(cols);
